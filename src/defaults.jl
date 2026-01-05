@@ -17,7 +17,7 @@ julia> using DimensionfulAngles.DefaultSymbols
 
 will bring the following into the calling namespace:
 
-- Dimensions 𝐋,𝐌,𝐓,𝐈,𝚯,𝐉,𝐍 and 𝐀
+- Dimensions 𝐋, 𝐌, 𝐓, 𝐈, 𝚯, 𝐉, 𝐍 and 𝐀
 
 - Base and derived SI units, with SI prefixes
 
@@ -29,7 +29,7 @@ All angles and derived units imported removing the ᵃ superscript.
 
 !!! note "Potential conflict with other packages"
 
-    All angles are imported removing the ᵃ superscript.
+    All angles and derived units are imported removing the ᵃ superscript.
     This means, e.g., `°` == `u"°ᵃ"` instead of `u"°"`.
     This may cause conflicts with other packages that assume angles are the dimensionless
     ones from `Unitful`.

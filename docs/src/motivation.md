@@ -18,7 +18,7 @@ and
 Note that by including *angle* as a dimension we are dropping its definition as a ratio of
 lengths.
 This is what makes the SI angle dimensionless and would make this 8-dimension system
-incoherent (dimensions are not linearly independent).
+incoherent (dimensions would not be linearly independent).
 
 Point 2 means that we cannot (easily) differentiate between different dimensionless quantities.
 In practice this means we have to be very careful when dealing with dimensionless quantities.
@@ -79,7 +79,7 @@ where the results has no units (converted to units of `1`).
 It is a measure of rotational rate (i.e. of the phase angle of the periodic waveform) and has units of (phase) angle over units of time (e.g. $rad/s = 1/s$).
 The frequency on the other hand is defined as one over the period and has units of 1 over time (e.g. $Hz = 1/s$).
 These are essentially the same units for two physically different quantities.
-And although they are physically different quantities they are used in practice to describe the same thing: how fast is the response repeating (which can also be described with yet a third physically distinct quantity: the period in units of time).
+And although they are physically different quantities they are used in practice to describe the same thing: how fast is the response repeating (which is also commonly described with yet a third physically distinct quantity: the period in units of time).
 The fact that frequency and angular frequency have the same units and are used to describe the same thing is often the source of many embarrassing mistakes.
 
 The [SI Brochure](https://www.bipm.org/en/publications/si-brochure) states:
