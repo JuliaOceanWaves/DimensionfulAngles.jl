@@ -3,10 +3,12 @@ using Unitful: 𝐉, 𝐓, 𝐋, ContextUnits, FixedUnits, FreeUnits, Units
 using DimensionfulAngles: 𝐀
 using Roots: ZeroProblem, solve
 
+
 function test_uamacro(unit::Symbol)
     unitᵃ = Symbol("$unit" * "ᵃ")
-    @eval case_ua = $(Meta.parse(""" ua"$unit" """))
-    @eval case_direct = DimensionfulAngles.$unitᵃ
+    case_ua = Base.macroexpand(@__MODULE__,
+        Expr(:macrocall, Symbol("@ua_str"), LineNumberNode(0), String(unit)))
+    case_direct = getfield(DimensionfulAngles, unitᵃ)
     @test case_ua === case_direct
     return nothing
 end
@@ -18,11 +20,12 @@ function test_uamacro_prefix(unit::Symbol)
 end
 
 function test_prefixed_units(unit::Symbol)
+    unitᵃ = Symbol("$unit" * "ᵃ")
+    base_unit = getfield(DimensionfulAngles, unitᵃ)
     for (power, prefix) in Unitful.prefixdict
-        unitᵃ = Symbol("$unit" * "ᵃ")
         prefixed_unitᵃ = Symbol(prefix * "$unitᵃ")
-        @eval prefixed = 1.0 * DimensionfulAngles.$prefixed_unitᵃ
-        @eval base_power = 10.0^$power * DimensionfulAngles.$unitᵃ
+        prefixed = 1.0 * getfield(DimensionfulAngles, prefixed_unitᵃ)
+        base_power = 10.0^power * base_unit
         @test prefixed ≈ base_power
     end
     return nothing

@@ -120,15 +120,12 @@ julia> using DimensionfulAngles, Unitful, Roots
 julia> g = Unitful.gn  # gravitational acceleration
 9.80665 m s⁻²
 
-julia> k0 = (2π)u"radᵃ/m"  # initial guess: 1m wavelength
-6.283185307179586 rad m⁻¹
-
 julia> h = 0.5u"m"  # water depth
 0.5 m
 
 julia> waterwaves = Dispersion(
         dispersion = (k -> √(k*θ₀*g*tanh(k*h/θ₀))),
-        dispersion_inverse = (ω -> solve(ZeroProblem(k -> k - ω^2/(g*tanh(k*h/θ₀))/θ₀, k0)))
+        dispersion_inverse = (ω -> solve(ZeroProblem(k -> k - ω^2/(g*tanh(k*h/θ₀))/θ₀, (0u"radᵃ/m", (Inf)u"radᵃ/m"))))
        );
 
 julia> uconvert(u"Hz", 0.004025678249387654u"radᵃ/mm", waterwaves)

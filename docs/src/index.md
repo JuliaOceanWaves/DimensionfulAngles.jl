@@ -41,12 +41,12 @@ Such proposals do exist, and for completeness these are discussed in [Relation t
 
 These definitions are based on the [SI Brochure](https://www.bipm.org/en/publications/si-brochure).
 In particular note the distinction between a quantity (which has a value and a unit), its unit, and its dimension.
-Any physical quantity hasa unique standard (coherent) SI unit and dimension, but the converse is not true.
+Any physical quantity has a unique standard (coherent) SI unit and dimension, but the converse is not true.
 E.g. both torque and energy, two distinct quantities, have the same dimension and units.
 Also note the distinction between plane and phase angles as distinct quantities, and angular velocity and angular frequency as distinct quantities.
 
   - **Angle**: Either a plane or phase angle.
   - **Plane Angle**: The angle between two lines originating from a common point.
   - **Phase Angle** or **Phase**: The argument of a complex number, i.e. the angle between the real axis and the radius of the polar representation of the complex number in the complex plane.
-  - **Unit**: A particular example of the quantity concerned which is used as a reference. For a particular quantity different units may be used.
+  - **Unit**: A particular example of the quantity concerned which is used as a reference. For a particular quantity, different units may be used.
   - **Dimension**: A conventional system for organizing physical quantities. In the SI the seven base quantities are each assigned one dimension. The dimensions of all other (derived) quantities are written as a product of powers of the base dimensions according to the equations of physics that relate these quantities.

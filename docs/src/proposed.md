@@ -1,6 +1,6 @@
 # Relation to proposed SI extensions
 
-The concept of dimensions has some limitations (see [SI-Brochure_2019](@cite), [Nature_2017](@cite), and [Bramwell_2017](@cite), which have led to many proposed extensions to the SI system, including many proposals to include angles as a dimension.
+The concept of dimensions has some limitations (see [SI-Brochure_2019](@cite), [Nature_2017](@cite), and [Bramwell_2017](@cite)), which have led to many proposed extensions to the SI system, including many proposals to include angles as a dimension.
 Several such proposals include [Eder_1982](@cite), [Quincey_2021](@cite), [Leonard_2021](@cite), and references therein.
 
 ## Summary of proposals
@@ -10,7 +10,7 @@ different, but most (i) include angle as a base dimension, (ii) use a "fundament
 constant, typically equal to one radian, to modify the equations of physics, and (iii)
 define solid angle as a derived dimension equal to angle squared.
 The different proposals, however, take different approaches to which equations or
-quantity units to modify. 
+quantity units to modify.
 One exception not considered here is a class of proposals that define a new dimension for *radius length* rather than for *angle*.
 
 Some examples of how common equations would be modified in such systems, using ``θ₀=1rad``:
@@ -19,7 +19,7 @@ Some examples of how common equations would be modified in such systems, using `
 
       + ``cos(θ) → cos(θ/θ₀)``
       + ``cos(ωt+φ) → cos([ωt+φ]/θ₀)``
-      + ``Aℯⁱᶿ → Aℯ^[iθ/θ₀]``
+      + ``Aℯⁱᶿ → Aℯ^{iθ/θ₀}``
 
   - Angular frequency and angular wave number:
 
@@ -42,8 +42,8 @@ Some examples of how common equations would be modified in such systems, using `
   - For dynamic equations, there's more variability between the different proposals.
     As an example, [Quincey_2021](@cite) would modify the units of torque and moment of inertia while leaving the units of work and energy intact.
 
-      + ``T=(𝐫×𝐅) → T=(𝐫×𝐅)/θ₀`` (torque, new units: ``J/s``)
-      + ``I=Σ(mᵢ⋅rᵢ)/θ₀²`` (moment of inertia, new units: ``kg⋅m²/rad²``)
+      + ``T=(𝐫×𝐅) → T=(𝐫×𝐅)/θ₀`` (torque, new units: ``J/rad``)
+      + ``I=Σ(mᵢ⋅rᵢ²)/θ₀²`` (moment of inertia, new units: ``kg⋅m²/rad²``)
       + ``L=Iω=(𝐫×𝐩)/θ₀`` (angular momentum, new units: ``J/(rad/s)``)
       + ``W=Tθ`` (work)
       + ``E=½Iω²`` (kinetic energy)
