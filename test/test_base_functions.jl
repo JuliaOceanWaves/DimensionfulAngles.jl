@@ -15,8 +15,12 @@ for (unit, full_turn) in (:radᵃ => 2π, :asᵃ => 360 * 3600)
 end
 
 function test_functions(functions)
-    for f in functions, (unit, full_turn) in units
-        @test @eval $f(($full_turn / 8) * DimensionfulAngles.$unit) ≈ $f(π / 4)
+    function_objects = map(f -> getfield(Base, f), functions)
+    for f in function_objects
+        reference = f(π / 4)
+        for (unit, full_turn) in units
+            @test f((full_turn / 8) * getproperty(DimensionfulAngles, unit)) ≈ reference
+        end
     end
     return nothing
 end
