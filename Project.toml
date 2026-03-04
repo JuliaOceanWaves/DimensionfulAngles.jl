@@ -1,7 +1,7 @@
 name = "DimensionfulAngles"
 uuid = "2d4b8d7a-02d9-40f9-9abe-9c695b77de0d"
 authors = ["Carlos A. Michelén Ströfer <c.michelen.strofer@gmail.com> and contributors"]
-version = "0.2.1"
+version = "0.2.2"
 
 [deps]
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"

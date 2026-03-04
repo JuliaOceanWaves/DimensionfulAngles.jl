@@ -145,16 +145,28 @@ julia> waterwaves = Dispersion(
 julia> uconvert(u"Hz", 0.004025678249387654u"radᵃ/mm", waterwaves) ≈ 1u"Hz"
 true
 ```
+
+The struct can also store a `gradient` function (dω/dk) and provides a `gradient_inverse`
+function.
+These are useful for other packages, like `WaveSpectra.jl` dealing with change of variables
+and invariances.
 """
 struct Dispersion <: Equivalence
     dispersion::Union{Function, Nothing}
     dispersion_inverse::Union{Function, Nothing}
+    gradient::Union{Function, Nothing}
+    gradient_inverse::Union{Function, Nothing}
 
     function Dispersion(;
             dispersion::Union{Function, Nothing}=nothing,
-            dispersion_inverse::Union{Function, Nothing}=nothing
+            dispersion_inverse::Union{Function, Nothing}=nothing,
+            gradient::Union{Function,Nothing}=nothing,
         )
-        return new(dispersion, dispersion_inverse)
+        function gradient_inverse(ω)
+            k = dispersion_inverse(ω)
+            return inv(gradient(k))
+        end
+        return new(dispersion, dispersion_inverse, gradient, gradient_inverse)
     end
 end
 
