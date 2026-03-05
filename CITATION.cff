@@ -1,11 +1,9 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 authors:
-- family-names: Michelén Ströfer
-  given-names: Carlos Alejandro
-  orcid: "https://orcid.org/0000-0001-6274-7271"
+- name: JuliaOceanWaves
 title: "DimensionfulAngles.jl"
-version: 0.1.0
+version: 0.2.2
 doi: 10.5281/zenodo.7500588
 date-released: 2022-12-30
 url: "https://github.com/cmichelenstrofer/DimensionfulAngles.jl"
