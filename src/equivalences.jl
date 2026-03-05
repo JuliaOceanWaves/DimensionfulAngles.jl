@@ -3,10 +3,11 @@
 const _temporal_dims = [Time, Frequency, AngularPeriod, AngularVelocity]
 const _spatial_dims = [Length, Wavenumber, AngularWavelength, AngularWavenumber]
 const _temporal_units = Dict(
-    Time => s, Frequency => Hz, AngularPeriod => s/radᵃ, AngularVelocity => radᵃ/s)
+    Time => s, Frequency => Hz, AngularPeriod => s / radᵃ, AngularVelocity => radᵃ / s)
 const _spatial_units = Dict(
-    Length => m, Wavenumber => m^-1, AngularWavelength => m/radᵃ, AngularWavenumber => radᵃ/m
-    )
+    Length => m, Wavenumber => m^-1, AngularWavelength => m / radᵃ, AngularWavenumber => radᵃ /
+                                                                                         m
+)
 
 # periodic equivalence for both temporal and spatial frequency
 """
@@ -47,21 +48,21 @@ julia> uconvert(u"radᵃ/s", 1u"Hz", Periodic())
 """
 struct Periodic <: Equivalence end
 # temporal
-@eqrelation Periodic (AngularVelocity / Frequency = 2π * radᵃ)
-@eqrelation Periodic (Frequency * Time = 1)
-@eqrelation Periodic (AngularVelocity * Time = 2π * radᵃ)
-@eqrelation Periodic (AngularVelocity * AngularPeriod = 1)
-@eqrelation Periodic (Time / AngularPeriod = 2π * radᵃ)
-@eqrelation Periodic (AngularPeriod * Frequency = 1/(2π * radᵃ))
+@eqrelation Periodic (AngularVelocity / Frequency=2π * radᵃ)
+@eqrelation Periodic (Frequency * Time=1)
+@eqrelation Periodic (AngularVelocity * Time=2π * radᵃ)
+@eqrelation Periodic (AngularVelocity * AngularPeriod=1)
+@eqrelation Periodic (Time / AngularPeriod=2π * radᵃ)
+@eqrelation Periodic (AngularPeriod * Frequency=1 / (2π * radᵃ))
 # spatial
-@eqrelation Periodic (AngularWavenumber / Wavenumber = 2π * radᵃ)
-@eqrelation Periodic (Wavenumber * Length = 1)
-@eqrelation Periodic (AngularWavenumber * Length = 2π * radᵃ)
-@eqrelation Periodic (AngularWavenumber * AngularWavelength = 1)
-@eqrelation Periodic (Length / AngularWavelength = 2π * radᵃ)
-@eqrelation Periodic (AngularWavelength * Wavenumber = 1/(2π * radᵃ))
+@eqrelation Periodic (AngularWavenumber / Wavenumber=2π * radᵃ)
+@eqrelation Periodic (Wavenumber * Length=1)
+@eqrelation Periodic (AngularWavenumber * Length=2π * radᵃ)
+@eqrelation Periodic (AngularWavenumber * AngularWavelength=1)
+@eqrelation Periodic (Length / AngularWavelength=2π * radᵃ)
+@eqrelation Periodic (AngularWavelength * Wavenumber=1 / (2π * radᵃ))
 # default to `uconvert` behavior, temporal
-for D ∈ _spatial_dims
+for D in _spatial_dims
     @eval begin
         function UnitfulEquivalences.edconvert(::dimtype($D), x::$D, equivalence::Periodic)
             u = _spatial_units[$D]
@@ -70,7 +71,7 @@ for D ∈ _spatial_dims
     end
 end
 # default to `uconvert` behavior, spatial
-for D ∈ _temporal_dims
+for D in _temporal_dims
     @eval begin
         function UnitfulEquivalences.edconvert(::dimtype($D), x::$D, equivalence::Periodic)
             u = _temporal_units[$D]
@@ -155,10 +156,10 @@ struct Dispersion <: Equivalence
     gradient_inverse::Union{Function, Nothing}
 
     function Dispersion(;
-            dispersion::Union{Function, Nothing}=nothing,
-            dispersion_inverse::Union{Function, Nothing}=nothing,
-            gradient::Union{Function,Nothing}=nothing,
-        )
+            dispersion::Union{Function, Nothing} = nothing,
+            dispersion_inverse::Union{Function, Nothing} = nothing,
+            gradient::Union{Function, Nothing} = nothing
+    )
         function gradient_inverse(ω)
             k = dispersion_inverse(ω)
             return inv(gradient(k))
@@ -168,7 +169,7 @@ struct Dispersion <: Equivalence
 end
 
 # use all the equivalences in Periodic
-for T1 ∈ _temporal_dims, T2 ∈ _temporal_dims
+for T1 in _temporal_dims, T2 in _temporal_dims
     @eval begin
         function UnitfulEquivalences.edconvert(d::dimtype($T1), x::$T2, ::Dispersion)
             return edconvert(d, x, Periodic())
@@ -176,7 +177,7 @@ for T1 ∈ _temporal_dims, T2 ∈ _temporal_dims
     end
 end
 
-for T1 ∈ _spatial_dims, T2 ∈ _spatial_dims
+for T1 in _spatial_dims, T2 in _spatial_dims
     @eval begin
         function UnitfulEquivalences.edconvert(d::dimtype($T1), x::$T2, ::Dispersion)
             return edconvert(d, x, Periodic())
@@ -185,14 +186,14 @@ for T1 ∈ _spatial_dims, T2 ∈ _spatial_dims
 end
 
 # add new equivalences between temporal <-> spatial frequencies
-for D_in ∈ _spatial_dims, D_out ∈ _temporal_dims
+for D_in in _spatial_dims, D_out in _temporal_dims
     @eval begin
         function UnitfulEquivalences.edconvert(
                 ::dimtype($D_out), x::$D_in, equivalence::Dispersion
-            )
+        )
             isnothing(equivalence.dispersion) && throw(ArgumentError(
                 "`dispersion` function not defined"))
-            k = uconvert(radᵃ/m, x, Periodic())
+            k = uconvert(radᵃ / m, x, Periodic())
             ω = equivalence.dispersion(k)
             u = _temporal_units[$D_out]
             return uconvert(u, ω, Periodic())
@@ -200,14 +201,14 @@ for D_in ∈ _spatial_dims, D_out ∈ _temporal_dims
     end
 end
 
-for D_in ∈ _temporal_dims, D_out ∈ _spatial_dims
+for D_in in _temporal_dims, D_out in _spatial_dims
     @eval begin
         function UnitfulEquivalences.edconvert(
                 ::dimtype($D_out), x::$D_in, equivalence::Dispersion
-            )
+        )
             isnothing(equivalence.dispersion_inverse) && throw(ArgumentError(
                 "`dispersion_inverse` function not defined"))
-            ω = uconvert(radᵃ/s, x, Periodic())
+            ω = uconvert(radᵃ / s, x, Periodic())
             k = equivalence.dispersion_inverse(ω)
             u = _spatial_units[$D_out]
             return uconvert(u, k, Periodic())

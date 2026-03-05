@@ -3,7 +3,7 @@
 One of the goals of this project is to extend all functions in Julia `Base` and the
 *standard library* that make sense to use quantities with dimensionful angles.
 Please let us know of any function we missed through a GitHub
-[issue](https://github.com/cmichelenstrofer/DimensionfulAngles.jl/issues).
+[issue](https://github.com/JuliaOceanWaves/DimensionfulAngles.jl/issues).
 
 The functions in `Base` currently extended to accept dimensionful angle arguments are:
 

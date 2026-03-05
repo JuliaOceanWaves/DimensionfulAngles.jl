@@ -20,7 +20,7 @@ The main takeaway is that
 
 **Package Guide**
 
-The [Package Guide](https://cmichelenstrofer.github.io/DimensionfulAngles.jl/stable/guide/intro/) is the main documentation for the package and includes usage details and examples of all of *DimensionfulAngles.jl*'s capabilities.
+The [Package Guide](https://JuliaOceanWaves.github.io/DimensionfulAngles.jl/stable/guide/intro/) is the main documentation for the package and includes usage details and examples of all of *DimensionfulAngles.jl*'s capabilities.
 These include
 
   - Angle as a base dimension.

@@ -1,5 +1,3 @@
-# push!(LOAD_PATH,"../src/")
-
 using Documenter
 using DocumenterCitations
 using DimensionfulAngles
@@ -40,4 +38,4 @@ makedocs(;
     plugins = [bib,],
 )
 
-deploydocs(; repo="github.com/cmichelenstrofer/DimensionfulAngles.jl.git",)
+deploydocs(; repo="github.com/JuliaOceanWaves/DimensionfulAngles.jl.git",)

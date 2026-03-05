@@ -56,7 +56,6 @@ export sexagesimal, show_sexagesimal
 #     AngularWavenumber, AngularWavenumberUnits, AngularWavenumberFreeUnits
 #     AngularWavelength, AngularWavelengthUnits, AngularWavelengthFreeUnits
 
-
 # Dimension
 """
     𝐀

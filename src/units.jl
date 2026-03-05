@@ -65,15 +65,15 @@ Unitful.has_unit_spacing(u::Units{(Unit{:Arcsecondᵃ, 𝐀}(0, 1 // 1),), 𝐀}
 @unit hourAngleᵃ "hourAngle" HourAngleᵃ (1turnᵃ//24) false
 
 @doc __unit_docstr("compassPoint", "compass point", "1/32 turn", "turn",
-                   ("[Other compass point definitions]" *
-                    "(https://en.wikipedia.org/wiki/Points_of_the_compass) also exist."))
+    ("[Other compass point definitions]" *
+     "(https://en.wikipedia.org/wiki/Points_of_the_compass) also exist."))
 @unit compassPointᵃ "compassPoint" CompassPointᵃ (1turnᵃ//32) false
 
 @doc __unit_docstr("hexacontade", "hexacontade", "1/60 turn", "turn")
 @unit hexacontadeᵃ "hexacontade" Hexacontadeᵃ (1turnᵃ//60) false
 
 @doc __unit_docstr("brad", "binary radian", "1/256 turn", "turn",
-                   "Also known as the binary degree.")
+    "Also known as the binary degree.")
 @unit bradᵃ "brad" BinaryRadianᵃ (1turnᵃ//256) false
 
 @doc __unit_docstr("grad", "gradian", "1/400 turn", "turn")
@@ -168,7 +168,7 @@ julia> show_sexagesimal(20.2ua"°"; base_unit = ua"ʰ")
 1ʰ 20ᵐ 48.000000000000256ˢ
 ```
 """
-function show_sexagesimal(x::Angle; base_unit::AngleUnits=°ᵃ)
+function show_sexagesimal(x::Angle; base_unit::AngleUnits = °ᵃ)
     base, minute, second = sexagesimal(x; base_unit = base_unit)
     print("$base $minute $second")
     return nothing

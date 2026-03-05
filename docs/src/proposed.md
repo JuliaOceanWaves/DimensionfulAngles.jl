@@ -83,7 +83,7 @@ Functions in other packages for which it would make sense to provide arguments w
 You will likely need to convert to radians and then strip the units before providing the quantity as an argument to that function.
 This can be done in several ways, including through the use of the constant `θ₀` for normalization.
 Alternatively, you can expand those functions to accept dimensionful angles by defining new methods.
-If you believe such expansion should be included in *DimensionfulAngles.jl* (e.g. to cover a very popular package) please create an [issue](https://github.com/cmichelenstrofer/DimensionfulAngles.jl/issues) in the GitHub repository.
+If you believe such expansion should be included in *DimensionfulAngles.jl* (e.g. to cover a very popular package) please create an [issue](https://github.com/JuliaOceanWaves/DimensionfulAngles.jl/issues) in the GitHub repository.
 
 ## References
 

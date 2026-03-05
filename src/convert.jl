@@ -45,10 +45,10 @@ function Unitful.uconvert(s::Val{:Unitful}, x::Quantity)
     end
     # derived units that contain angles
     x = _convert_units(x, srᵃ, 𝐀^2, sr, NoDims)
-    x = _convert_units(x, rpsᵃ, 𝐀*𝐓^-1, rps, 𝐓^-1)
-    x = _convert_units(x, rpmᵃ, 𝐀*𝐓^-1, rpm, 𝐓^-1)
-    x = _convert_units(x, lmᵃ, 𝐀^2*𝐉, lm, 𝐉)
-    x = _convert_units(x, lxᵃ, 𝐀^2*𝐉*𝐋^-2, lx, 𝐉*𝐋^-2)
+    x = _convert_units(x, rpsᵃ, 𝐀 * 𝐓^-1, rps, 𝐓^-1)
+    x = _convert_units(x, rpmᵃ, 𝐀 * 𝐓^-1, rpm, 𝐓^-1)
+    x = _convert_units(x, lmᵃ, 𝐀^2 * 𝐉, lm, 𝐉)
+    x = _convert_units(x, lxᵃ, 𝐀^2 * 𝐉 * 𝐋^-2, lx, 𝐉 * 𝐋^-2)
     return x
 end
 
@@ -61,10 +61,10 @@ function Unitful.uconvert(s::Val{:DimensionfulAngles}, x::Quantity)
     end
     # derived units that contain angles
     x = _convert_units(x, sr, NoDims, srᵃ, 𝐀^2)
-    x = _convert_units(x, rps, 𝐓^-1, rpsᵃ, 𝐀*𝐓^-1)
-    x = _convert_units(x, rpm, 𝐓^-1, rpmᵃ, 𝐀*𝐓^-1)
-    x = _convert_units(x, lm, 𝐉, lmᵃ, 𝐀^2*𝐉)
-    x = _convert_units(x, lx, 𝐉*𝐋^-2, lxᵃ, 𝐀^2*𝐉*𝐋^-2)
+    x = _convert_units(x, rps, 𝐓^-1, rpsᵃ, 𝐀 * 𝐓^-1)
+    x = _convert_units(x, rpm, 𝐓^-1, rpmᵃ, 𝐀 * 𝐓^-1)
+    x = _convert_units(x, lm, 𝐉, lmᵃ, 𝐀^2 * 𝐉)
+    x = _convert_units(x, lx, 𝐉 * 𝐋^-2, lxᵃ, 𝐀^2 * 𝐉 * 𝐋^-2)
     return x
 end
 
@@ -91,7 +91,7 @@ function _convert_unequivalent_unitful(x)
     output_units = NoUnits
     for iunit in typeof(x).parameters[3].parameters[1]
         output_units *= (
-            typeof(iunit)∈unequivalent_units ? arcsecond^iunit.power :
+            typeof(iunit) ∈ unequivalent_units ? arcsecond^iunit.power :
             _unittype(x, iunit, NoDims, 1)()
         )
     end
@@ -112,8 +112,8 @@ function _convert_unequivalent_dimensionfulangles(x)
     output_units = NoUnits
     for iunit in typeof(x).parameters[3].parameters[1]
         output_units *= (
-            typeof(iunit)∈unequivalent_units_arcsecond ? arcsecondᵃ^iunit.power :
-            typeof(iunit)∈unequivalent_units_hourangle ? hourAngleᵃ^iunit.power :
+            typeof(iunit) ∈ unequivalent_units_arcsecond ? arcsecondᵃ^iunit.power :
+            typeof(iunit) ∈ unequivalent_units_hourangle ? hourAngleᵃ^iunit.power :
             _unittype(x, iunit, 𝐀, iunit.power)()
         )
     end
@@ -139,21 +139,18 @@ function _angle_unit_pairs()
         (diameterPart, diameterPartᵃ),
         (grad, gradᵃ),
         (arcminute, arcminuteᵃ),
-        (arcsecond, arcsecondᵃ),
+        (arcsecond, arcsecondᵃ)
     ]
-    dimensionful_unitful = [(y, x) for (x,y) in unitful_dimensionful]
+    dimensionful_unitful = [(y, x) for (x, y) in unitful_dimensionful]
     return unitful_dimensionful, dimensionful_unitful
 end
 
 function _convert_units(
         x::Quantity,
         input_unit::Units, input_dim::Dimensions,
-        output_unit::Units, output_dim::Dimensions,
-    )
-
+        output_unit::Units, output_dim::Dimensions
+)
     AngularUnit = typeof(typeof(input_unit).parameters[1][1])
-
-
 
     for iunit in typeof(x).parameters[3].parameters[1]
         (ipower, itens) = (iunit.power, iunit.tens)
