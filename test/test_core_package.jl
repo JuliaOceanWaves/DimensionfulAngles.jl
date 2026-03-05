@@ -3,7 +3,6 @@ using Unitful: 𝐉, 𝐓, 𝐋, ContextUnits, FixedUnits, FreeUnits, Units
 using DimensionfulAngles: 𝐀
 using Roots: ZeroProblem, solve
 
-
 function test_uamacro(unit::Symbol)
     unitᵃ = Symbol("$unit" * "ᵃ")
     case_ua = Base.macroexpand(@__MODULE__,
@@ -54,11 +53,11 @@ end
 
 @testset "Units" begin
     for (unit, full_turn) in (:arcminuteᵃ => 360 * 60, :arcsecondᵃ => 360 * 3600,
-                              :diameterPartᵃ => 2π * 60, :doubleTurnᵃ => 0.5, :turnᵃ => 1,
-                              :halfTurnᵃ => 2, :quadrantᵃ => 4, :sextantᵃ => 6,
-                              :octantᵃ => 8, :clockPositionᵃ => 12, :hourAngleᵃ => 24,
-                              :compassPointᵃ => 32, :hexacontadeᵃ => 60, :bradᵃ => 256,
-                              :gradᵃ => 400, :ʰᵃ => 24, :ᵐᵃ => 24 * 60, :ˢᵃ => 24 * 3600)
+        :diameterPartᵃ => 2π * 60, :doubleTurnᵃ => 0.5, :turnᵃ => 1,
+        :halfTurnᵃ => 2, :quadrantᵃ => 4, :sextantᵃ => 6,
+        :octantᵃ => 8, :clockPositionᵃ => 12, :hourAngleᵃ => 24,
+        :compassPointᵃ => 32, :hexacontadeᵃ => 60, :bradᵃ => 256,
+        :gradᵃ => 400, :ʰᵃ => 24, :ᵐᵃ => 24 * 60, :ˢᵃ => 24 * 3600)
         @test @eval $full_turn * DimensionfulAngles.$unit ≈ 1ua"turn"
         test_uamacro(Symbol("$unit"[1:prevind("$unit", lastindex("$unit"))]))
     end
@@ -184,9 +183,10 @@ end
     # dispersion: spatial <-> temporal
     h, g = (Inf)u"m", Unitful.gn
     waterwaves = Dispersion(
-        dispersion = ( k -> √(k*θ₀*g*tanh(k*h/θ₀)) ),
-        dispersion_inverse = (ω -> solve(ZeroProblem(k -> k - ω^2/(g*tanh(k*h/θ₀))/θ₀, k0)))
-        );
+        dispersion = (k -> √(k * θ₀ * g * tanh(k * h / θ₀))),
+        dispersion_inverse = (ω -> solve(ZeroProblem(
+            k -> k - ω^2 / (g * tanh(k * h / θ₀)) / θ₀, k0)))
+    )
     @test uconvert(u"Hz", 0.004025678249387654u"radᵃ/mm", waterwaves) ≈ 1u"Hz"
 
     # dispersion: temporal
@@ -227,86 +227,88 @@ end
 end
 
 @testset "Convert" begin
-        # uconvert :Unitful <=> :DimensionfulAngles
-        for (x_u, x_ua) ∈ zip((1u"rad", 1u"°"), (1u"radᵃ", 1u"°ᵃ"))
-            @test uconvert(:DimensionfulAngles, x_u) === x_ua
-            @test dimension(uconvert(:DimensionfulAngles, x_u)) === 𝐀
-            @test uconvert(:Unitful, x_u) === x_u
-            @test dimension(uconvert(:Unitful, x_u)) === NoDims
-            @test uconvert(:Unitful, x_ua) === x_u
-            @test dimension(uconvert(:Unitful, x_ua)) === NoDims
-            @test uconvert(:DimensionfulAngles, x_ua) === x_ua
-            @test dimension(uconvert(:DimensionfulAngles, x_ua)) === 𝐀
-        end
-        for (mm, UnitType) ∈ zip(
-                [u"mm", ContextUnits(u"mm", u"mm"), FixedUnits(u"mm")],
-                [FreeUnits, ContextUnits, FixedUnits]
-            )
-            x_u = 1.24*mm*u"°^3/m*s^2"
-            x_ua = uconvert(:DimensionfulAngles, x_u)
-            @test x_ua ≈ 1.24*(π/180)^3*u"mm*radᵃ^3*s^2*m^-1"
-            @test dimension(x_ua) == 𝐀^3*𝐓^2
-            @test typeof(unit(x_u)) <: UnitType
-            @test typeof(unit(x_ua)) <: UnitType
-        end
-        for (rad, UnitType) ∈ zip(
-                [u"rad", ContextUnits(u"rad", u"rad"), FixedUnits(u"rad")],
-                [FreeUnits, ContextUnits, FixedUnits]
-            )
-            x_u = 1.24*rad*u"°^3/m*s^2"
-            x_ua = uconvert(:DimensionfulAngles, x_u)
-            @test x_ua ≈ 1.24*(π/180)^3*u"radᵃ^4*s^2*m^-1"
-            @test dimension(x_ua) == 𝐀^4*𝐓^2*𝐋^-1
-            @test typeof(unit(x_u)) <: UnitType
-            @test typeof(unit(x_ua)) <: UnitType
-        end
-        let x = 2.35u"turn^2*rad^-1*°^4"*u"mm^7"
-            @test unit(uconvert(:DimensionfulAngles, x)) == ua"turn^2*rad^-1*°^4"*u"mm^7"
-            @test uconvert(:DimensionfulAngles, x).val ≈ 2.35
-        end
-        let x = 2.35ua"turn^2*rad^-1*°^4"*u"mm^7"
-            @test unit(uconvert(:DimensionfulAngles, x)) == ua"turn^2*rad^-1*°^4"*u"mm^7"
-            @test uconvert(:DimensionfulAngles, x).val ≈ 2.35
-        end
-        let x = 2.35u"turn^2*rad^-1*°^4"*u"mm^7"
-            @test unit(uconvert(:Unitful, x)) == u"turn^2*rad^-1*°^4"*u"mm^7"
-            @test uconvert(:Unitful, x).val ≈ 2.35
-        end
-        let x = 2.35ua"turn^2*rad^-1*°^4"*u"mm^7"
-            @test unit(uconvert(:Unitful, x)) == u"turn^2*rad^-1*°^4"*u"mm^7"
-            @test uconvert(:Unitful, x).val ≈ 2.35
-        end
-        # astronomical units; not equivalent
-        let x = 2.35u"turn^2*rad^-1*μas^-2*mas^-2*pas"*u"mm^7"
-            @test (
-                unit(uconvert(:DimensionfulAngles, x)) == ua"turn^2*rad^-1*arcsecond^-3"*u"mm^7"
-            )
-            @test uconvert(:DimensionfulAngles, x).val ≈ (
-                2.35 * (1//1_000_000)^-2 * (1//1_000)^-2 * (1//1_000_000_000_000)
-            )
-        end
-        let x = 2.35ua"turn^2*rad^-1*μas^-2*mas^-2*pas* ʰ* ᵐ^2* ˢ^-1"*u"mm^7"
-            @test (
-                unit(uconvert(:Unitful, x)) == u"turn^2*rad^-1*arcsecond^-3*hourAngle^2"*u"mm^7"
-            )
-            @test uconvert(:Unitful, x).val ≈ (
-                2.35 *
-                (1//1_000_000)^-2 * (1//1_000)^-2 * (1//1_000_000_000_000) *
-                (1//60)^2 * (1//3600)^-1
-            )
-        end
-        # derived units
-        let x = 1.98u"rpm*rps^2*lm^-1*lx*msr^2"
-            @test unit(uconvert(:DimensionfulAngles, x)) == ua"rpm*rps^2*lm^-1*lx*msr^2"
-            @test (uconvert(:DimensionfulAngles, x)).val ≈ 1.98
-        end
+    # uconvert :Unitful <=> :DimensionfulAngles
+    for (x_u, x_ua) in zip((1u"rad", 1u"°"), (1u"radᵃ", 1u"°ᵃ"))
+        @test uconvert(:DimensionfulAngles, x_u) === x_ua
+        @test dimension(uconvert(:DimensionfulAngles, x_u)) === 𝐀
+        @test uconvert(:Unitful, x_u) === x_u
+        @test dimension(uconvert(:Unitful, x_u)) === NoDims
+        @test uconvert(:Unitful, x_ua) === x_u
+        @test dimension(uconvert(:Unitful, x_ua)) === NoDims
+        @test uconvert(:DimensionfulAngles, x_ua) === x_ua
+        @test dimension(uconvert(:DimensionfulAngles, x_ua)) === 𝐀
+    end
+    for (mm, UnitType) in zip(
+        [u"mm", ContextUnits(u"mm", u"mm"), FixedUnits(u"mm")],
+        [FreeUnits, ContextUnits, FixedUnits]
+    )
+        x_u = 1.24 * mm * u"°^3/m*s^2"
+        x_ua = uconvert(:DimensionfulAngles, x_u)
+        @test x_ua ≈ 1.24 * (π / 180)^3 * u"mm*radᵃ^3*s^2*m^-1"
+        @test dimension(x_ua) == 𝐀^3 * 𝐓^2
+        @test typeof(unit(x_u)) <: UnitType
+        @test typeof(unit(x_ua)) <: UnitType
+    end
+    for (rad, UnitType) in zip(
+        [u"rad", ContextUnits(u"rad", u"rad"), FixedUnits(u"rad")],
+        [FreeUnits, ContextUnits, FixedUnits]
+    )
+        x_u = 1.24 * rad * u"°^3/m*s^2"
+        x_ua = uconvert(:DimensionfulAngles, x_u)
+        @test x_ua ≈ 1.24 * (π / 180)^3 * u"radᵃ^4*s^2*m^-1"
+        @test dimension(x_ua) == 𝐀^4 * 𝐓^2 * 𝐋^-1
+        @test typeof(unit(x_u)) <: UnitType
+        @test typeof(unit(x_ua)) <: UnitType
+    end
+    let x = 2.35u"turn^2*rad^-1*°^4" * u"mm^7"
+        @test unit(uconvert(:DimensionfulAngles, x)) == ua"turn^2*rad^-1*°^4" * u"mm^7"
+        @test uconvert(:DimensionfulAngles, x).val ≈ 2.35
+    end
+    let x = 2.35ua"turn^2*rad^-1*°^4" * u"mm^7"
+        @test unit(uconvert(:DimensionfulAngles, x)) == ua"turn^2*rad^-1*°^4" * u"mm^7"
+        @test uconvert(:DimensionfulAngles, x).val ≈ 2.35
+    end
+    let x = 2.35u"turn^2*rad^-1*°^4" * u"mm^7"
+        @test unit(uconvert(:Unitful, x)) == u"turn^2*rad^-1*°^4" * u"mm^7"
+        @test uconvert(:Unitful, x).val ≈ 2.35
+    end
+    let x = 2.35ua"turn^2*rad^-1*°^4" * u"mm^7"
+        @test unit(uconvert(:Unitful, x)) == u"turn^2*rad^-1*°^4" * u"mm^7"
+        @test uconvert(:Unitful, x).val ≈ 2.35
+    end
+    # astronomical units; not equivalent
+    let x = 2.35u"turn^2*rad^-1*μas^-2*mas^-2*pas" * u"mm^7"
+        @test (
+            unit(uconvert(:DimensionfulAngles, x)) ==
+            ua"turn^2*rad^-1*arcsecond^-3" * u"mm^7"
+        )
+        @test uconvert(:DimensionfulAngles, x).val ≈ (
+            2.35 * (1 // 1_000_000)^-2 * (1 // 1_000)^-2 * (1 // 1_000_000_000_000)
+        )
+    end
+    let x = 2.35ua"turn^2*rad^-1*μas^-2*mas^-2*pas* ʰ* ᵐ^2* ˢ^-1" * u"mm^7"
+        @test (
+            unit(uconvert(:Unitful, x)) ==
+            u"turn^2*rad^-1*arcsecond^-3*hourAngle^2" * u"mm^7"
+        )
+        @test uconvert(:Unitful, x).val ≈ (
+            2.35 *
+            (1 // 1_000_000)^-2 * (1 // 1_000)^-2 * (1 // 1_000_000_000_000) *
+            (1 // 60)^2 * (1 // 3600)^-1
+        )
+    end
+    # derived units
+    let x = 1.98u"rpm*rps^2*lm^-1*lx*msr^2"
+        @test unit(uconvert(:DimensionfulAngles, x)) == ua"rpm*rps^2*lm^-1*lx*msr^2"
+        @test (uconvert(:DimensionfulAngles, x)).val ≈ 1.98
+    end
 end
 
 @testset "DefaultSymbols" begin
     @test typeof(DimensionfulAngles.DefaultSymbols) == Module
     @test dimension(DimensionfulAngles.DefaultSymbols.rad) == 𝐀
     @test dimension(DimensionfulAngles.DefaultSymbols.°) == 𝐀
-    @test dimension(DimensionfulAngles.DefaultSymbols.lm) == 𝐉*𝐀^2
-    @test dimension(DimensionfulAngles.DefaultSymbols.lx) == 𝐉*𝐀^2*𝐋^-2
+    @test dimension(DimensionfulAngles.DefaultSymbols.lm) == 𝐉 * 𝐀^2
+    @test dimension(DimensionfulAngles.DefaultSymbols.lx) == 𝐉 * 𝐀^2 * 𝐋^-2
     @test DimensionfulAngles.DefaultSymbols.cdᵤ === Unitful.cd
 end
