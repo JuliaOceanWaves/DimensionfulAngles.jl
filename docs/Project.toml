@@ -1,13 +1,9 @@
 [deps]
-DimensionfulAngles = "2d4b8d7a-02d9-40f9-9abe-9c695b77de0d"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 DocumenterCitations = "daee34ce-89f3-4625-b898-19384cb65244"
 Roots = "f2b01f46-fcfa-551c-844a-d8ac1e96c665"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 UnitfulAngles = "6fb2a4bd-7999-5318-a3b2-8ad61056cd98"
-
-[sources]
-DimensionfulAngles = {path = ".."}
 
 [compat]
 Documenter = "1.2"
