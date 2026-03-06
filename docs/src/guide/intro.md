@@ -1,6 +1,6 @@
 # Basic usage
 
-This package extends [Unitful.jl](https://painterqubits.github.io/Unitful.jl/stable/) and the new dimension of angle inherits a lot of default behavior from *Unitful.jl*.
+This package extends [Unitful.jl](https://juliaphysics.github.io/Unitful.jl/stable/) and the new dimension of angle inherits a lot of default behavior from *Unitful.jl*.
 You should read the *Unitful.jl* documentation first.
 
 At its core, [`DimensionfulAngles`](@ref) defines:
@@ -14,7 +14,7 @@ At its core, [`DimensionfulAngles`](@ref) defines:
 
 The unit `radᵃ` is prefixable, and therefore defines many other units, which are documented in [Prefixed units](@ref intro_prefixed).
 
-The units in this package are appended the superscript `ᵃ` to differentiate them from the units in [Unitful.jl](https://painterqubits.github.io/Unitful.jl/stable/) and [UnitfulAngles.jl](https://github.com/yakir12/UnitfulAngles.jl), which have the same name but are non-dimensional.
+The units in this package are appended the superscript `ᵃ` to differentiate them from the units in [Unitful.jl](https://juliaphysics.github.io/Unitful.jl/stable/) and [UnitfulAngles.jl](https://github.com/yakir12/UnitfulAngles.jl), which have the same name but are non-dimensional.
 The [`@ua_str`](@ref) provides an easier way to access these units without having to type the superscript `ᵃ`.
 For example, both of these are equivalent:
 
@@ -57,7 +57,7 @@ julia> 2.1rad / s
 
 Yet another way to import units is to import the *default* set of units, which includes
 all the
-[default units from `Unitful.jl`](https://painterqubits.github.io/Unitful.jl/stable/#Important-note-on-namespaces)
+[default units from `Unitful.jl`](https://juliaphysics.github.io/Unitful.jl/stable/#Important-note-on-namespaces)
 but with angle units from `DimensionfulAngles.jl`.
 The units from `DimensionfulAngles.jl` are imported without the superscript `ᵃ` in their
 names.

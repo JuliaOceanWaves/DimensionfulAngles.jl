@@ -22,7 +22,7 @@ incoherent (dimensions would not be linearly independent).
 
 Point 2 means that we cannot (easily) differentiate between different dimensionless quantities.
 In practice this means we have to be very careful when dealing with dimensionless quantities.
-Here are some motivating examples using [Unitful.jl](https://painterqubits.github.io/Unitful.jl/).
+Here are some motivating examples using [Unitful.jl](https://juliaphysics.github.io/Unitful.jl/).
 
 ## Example- Dimensional Consistency
 

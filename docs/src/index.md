@@ -1,6 +1,6 @@
 # DimensionfulAngles.jl
 
-*An extension of [Unitful.jl](https://painterqubits.github.io/Unitful.jl/) to include angle as a dimension.*
+*An extension of [Unitful.jl](https://juliaphysics.github.io/Unitful.jl/stable/) to include angle as a dimension.*
 
 While angle is not an SI base dimension, it can be extremely useful to consider it as one in computer units systems.
 This allows, among other things, [dispatching](https://docs.julialang.org/en/v1/manual/methods/) on angles.
@@ -8,7 +8,7 @@ This package creates a single additional dimension *angle* which is assigned to 
 
 !!! note
 
-    Please read through the [Unitful.jl documentation](https://painterqubits.github.io/Unitful.jl/stable/) first. This package extends *Unitful.jl* and documentation for the main usage and features of *Unitful.jl* are not duplicated here.
+    Please read through the [Unitful.jl documentation](https://juliaphysics.github.io/Unitful.jl/stable/) first. This package extends *Unitful.jl* and documentation for the main usage and features of *Unitful.jl* are not duplicated here.
 
 **Angle as a dimension?**
 

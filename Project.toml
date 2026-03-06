@@ -13,3 +13,6 @@ Unitful = "1.10"
 UnitfulAngles = "0.7"
 UnitfulEquivalences = "0.2"
 julia = "1.7"
+
+[workspace]
+projects = ["test", "docs"]
