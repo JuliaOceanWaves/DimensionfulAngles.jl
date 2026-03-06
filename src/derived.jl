@@ -10,7 +10,7 @@ The steradian, a unit of spherical angle.
 
 There are 4π sr in a sphere.
 The steradian is the SI unit of solid angle.
-Unlike `Unitful.sr`, which follows SI and is therefor dimensionless,
+Unlike `Unitful.sr`, which follows SI and is therefore dimensionless,
 `srᵃ` has dimensions of Angle squared.
 Accepts SI prefixes.
 

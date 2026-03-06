@@ -153,12 +153,12 @@ function _convert_units(
     AngularUnit = typeof(typeof(input_unit).parameters[1][1])
 
     for iunit in typeof(x).parameters[3].parameters[1]
-        (ipower, itens) = (iunit.power, iunit.tens)
+        (power, tens) = (iunit.power, iunit.tens)
         if typeof(iunit) == AngularUnit
-            ounit = typeof(typeof(output_unit).parameters[1][1])(itens, ipower)
+            ounit = typeof(typeof(output_unit).parameters[1][1])(tens, power)
             x *= (
-                _unittype(x, iunit, input_dim, ipower)()^-1 *
-                _unittype(x, ounit, output_dim, ipower)()
+                _unittype(x, iunit, input_dim, power)()^-1 *
+                _unittype(x, ounit, output_dim, power)()
             )
         end
     end

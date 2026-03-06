@@ -76,7 +76,7 @@ The radian, a unit of angle.
 
 There are 2π rad in a circle.
 The radian is the SI unit of angle.
-Unlike `Unitful.rad`, which follows SI and is therefor dimensionless,
+Unlike `Unitful.rad`, which follows SI and is therefore dimensionless,
 `radᵃ` has dimensions of Angle.
 Accepts SI prefixes.
 
@@ -100,7 +100,7 @@ The degree, a unit of angle.
 
 There are 360° in a circle.
 The degree is an SI-accepted unit of angle.
-Unlike `Unitful.°`, which follows SI and is therefor dimensionless,
+Unlike `Unitful.°`, which follows SI and is therefore dimensionless,
 `°ᵃ` has dimensions of Angle.
 Does not accepts SI prefixes.
 
