@@ -1,4 +1,4 @@
-[![CI](https://github.com/JuliaOceanWaves/DimensionfulAngles.jl/actions/workflows/Test.yml/badge.svg)](https://github.com/JuliaOceanWaves/DimensionfulAngles.jl/actions/workflows/CI.yml)
+[![CI](https://github.com/JuliaOceanWaves/DimensionfulAngles.jl/actions/workflows/Test.yml/badge.svg)](https://github.com/JuliaOceanWaves/DimensionfulAngles.jl/actions/workflows/Test.yml)
 [![codecov](https://codecov.io/github/JuliaOceanWaves/DimensionfulAngles.jl/graph/badge.svg?token=8RHVZGPK13)](https://codecov.io/github/JuliaOceanWaves/DimensionfulAngles.jl)
 [![deps](https://juliahub.com/docs/General/DimensionfulAngles/stable/deps.svg)](https://juliahub.com/ui/Packages/General/DimensionfulAngles?t=2)
 
